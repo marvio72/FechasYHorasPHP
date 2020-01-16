@@ -3,7 +3,7 @@
   if (isset($_POST["login"])) {
     session_start();
     if ($_POST['usuario']=="mrre" && $_POST['clave']=="12345") {
-      $_SESSION['sesion']=true;
+      $_SESSION['sesion']=time();
       header("location:accesoSecreto.php");
       exit;
     }
@@ -34,5 +34,12 @@
       <input type="submit" value="Entrar" name="login">
     </p>
   </form>
+  <?php
+  
+    if(isset($_GET['expiro'])){
+      print "<p>Su sesión de trabajo expiró. Favor de volver a registrarse</p>";
+    }
+  
+  ?>
 </body>
 </html>
