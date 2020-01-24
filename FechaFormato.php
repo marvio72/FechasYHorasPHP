@@ -13,6 +13,7 @@ class FechaFormato extends DateTime
     $h = (integer) $this->format("h");
     $i = (integer) $this->format("i");
     $s = (integer) $this->format("s");
-    return $this->dias[$w]." ".$j." de " .$this->meses[$m]." de ".$a. " y son las ".$h." horas, ".$i." minutos y ".$s." segundos";
+    $e = $this->format("e");
+    return $this->dias[$w]." ".$j." de " .$this->meses[$m]." de ".$a. " y son las ".$h." horas, ".$i." minutos y ".$s." segundos, zona horaria: ".$e;
   }
 }
