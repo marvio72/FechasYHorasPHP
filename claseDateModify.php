@@ -63,42 +63,47 @@
       $mes = isset($_POST["mes"]) ? $_POST["mes"] : "0";
       $dia = isset($_POST["dia"]) ? $_POST["dia"] : "0";
       $anio = isset($_POST["anio"]) ? $_POST["anio"] : "0";
-      $fecha = new FechaFormato($anio."-".$mes."-".$dia);
-      //
-      $signoDias = isset($_POST["signoDias"]) ? $_POST["signoDias"]: "";
-      $sumaDias = isset($_POST['sumaDias']) ? $_POST['sumaDias']:"";
-      $signoSemanas = isset($_POST['signoSemanas']) ? $_POST['signoSemanas'] : "";
-      $sumaSemanas = isset($_POST['sumaSemanas']) ? $_POST['sumaSemanas'] : "";
-
-      $cadena = "";
-      $cadena2 = "";
-      if ($sumaDias!="") {
-        if ($signoDias == "1") {
-          $cadena .= "+".$sumaDias." days ";
-          $cadena2 .= "suma ".$sumaDias." días ";
-        } else{
-          $cadena .= "-".$sumaDias." days ";
-          $cadena2.= "resta ".$sumaDias." días ";
+      try {
+        $fecha = new FechaFormato($anio."-".$mes."-".$dia);
+        //
+        $signoDias = isset($_POST["signoDias"]) ? $_POST["signoDias"]: "";
+        $sumaDias = isset($_POST['sumaDias']) ? $_POST['sumaDias']:"";
+        $signoSemanas = isset($_POST['signoSemanas']) ? $_POST['signoSemanas'] : "";
+        $sumaSemanas = isset($_POST['sumaSemanas']) ? $_POST['sumaSemanas'] : "";
+  
+        $cadena = "";
+        $cadena2 = "";
+        if ($sumaDias!="") {
+          if ($signoDias == "1") {
+            $cadena .= "+".$sumaDias." days ";
+            $cadena2 .= "suma ".$sumaDias." días ";
+          } else{
+            $cadena .= "-".$sumaDias." days ";
+            $cadena2.= "resta ".$sumaDias." días ";
+          }
         }
-      }
-
-      if ($sumaSemanas!="") {
-        if ($signoSemanas=="1") {
-          $cadena .= "+".$sumaSemanas." weeks ";
-          $cadena2 .= "suma ".$sumaSemanas." semanas ";
+  
+        if ($sumaSemanas!="") {
+          if ($signoSemanas=="1") {
+            $cadena .= "+".$sumaSemanas." weeks ";
+            $cadena2 .= "suma ".$sumaSemanas." semanas ";
+          } else {
+            $cadena .= "-".$sumaSemanas." weeks ";
+            $cadena2 .= "resta ".$sumaSemanas." semanas ";
+          }
+        }
+  
+  
+        print $fecha. " " .$cadena2. "<br>";
+        print "<hr>";
+        if ($cadena!="") {
+          print $fecha->modify($cadena);
         } else {
-          $cadena .= "-".$sumaSemanas." weeks ";
-          $cadena2 .= "resta ".$sumaSemanas." semanas ";
+          print "No hay modificación alguna";
         }
-      }
-
-
-      print $fecha. " " .$cadena2. "<br>";
-      print "<hr>";
-      if ($cadena!="") {
-        print $fecha->modify($cadena);
-      } else {
-        print "No hay modificación alguna";
+      } catch (Exception $e) {
+        DateTime::getLastErrors();
+        print $e->getMessage();
       }
     }
   ?>
