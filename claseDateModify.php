@@ -32,25 +32,15 @@
       </select>
       <label for="anio">Año: </label>
       <input type="text" name="anio" id="anio" size="6">
+
+      <label for="horas">Horas: </label>
+      <input type="number" name="horas" id="horas" max="24" min="1" size="6">
       
-
-      <label for="signoDias">Operación: </label>
-      <select name="signoDias" id="signoDias">
-        <option value="1">Suma</option>
-        <option value="0">Resta</option>
-      </select>
-
-      <label for="sumaDias">Días: </label>
-      <input type="text" name="sumaDias" id="sumaDias" size="6">
-
-      <label for="signoSemanas">Operación: </label>
-      <select name="signoSemanas" id="signoSemanas">
-        <option value="1">Suma</option>
-        <option value="0">Resta</option>
-      </select>
+      <label for="minutos">Minutos: </label>
+      <input type="number" name="minutos" id="minutos" max="60" min="1" size="6">
       
-      <label for="sumaSemanas">Semanas: </label>
-      <input type="text" name="sumaSemanas" id="sumaSemanas" size="6">
+      <label for="segundos">Segundos: </label>
+      <input type="number" name="segundos" id="segundos" max="60" min="1" size="6">
         
     </p>
     <p>
@@ -63,43 +53,18 @@
       $mes = isset($_POST["mes"]) ? $_POST["mes"] : "0";
       $dia = isset($_POST["dia"]) ? $_POST["dia"] : "0";
       $anio = isset($_POST["anio"]) ? $_POST["anio"] : "0";
+      $horas = isset($_POST['horas']) ? $_POST['horas'] : "0";
+      $min = isset($_POST['minutos']) ? $_POST['minutos'] : "0";
+      $seg = isset($_POST['segundos']) ? $_POST['segundos'] : "0";
       try {
-        $fecha = new FechaFormato($anio."-".$mes."-".$dia);
+        $fecha = new FechaFormato();
         //
-        $signoDias = isset($_POST["signoDias"]) ? $_POST["signoDias"]: "";
-        $sumaDias = isset($_POST['sumaDias']) ? $_POST['sumaDias']:"";
-        $signoSemanas = isset($_POST['signoSemanas']) ? $_POST['signoSemanas'] : "";
-        $sumaSemanas = isset($_POST['sumaSemanas']) ? $_POST['sumaSemanas'] : "";
-  
-        $cadena = "";
-        $cadena2 = "";
-        if ($sumaDias!="") {
-          if ($signoDias == "1") {
-            $cadena .= "+".$sumaDias." days ";
-            $cadena2 .= "suma ".$sumaDias." días ";
-          } else{
-            $cadena .= "-".$sumaDias." days ";
-            $cadena2.= "resta ".$sumaDias." días ";
-          }
-        }
-  
-        if ($sumaSemanas!="") {
-          if ($signoSemanas=="1") {
-            $cadena .= "+".$sumaSemanas." weeks ";
-            $cadena2 .= "suma ".$sumaSemanas." semanas ";
-          } else {
-            $cadena .= "-".$sumaSemanas." weeks ";
-            $cadena2 .= "resta ".$sumaSemanas." semanas ";
-          }
-        }
-  
-  
-        print $fecha. " " .$cadena2. "<br>";
-        print "<hr>";
-        if ($cadena!="") {
-          print $fecha->modify($cadena);
+        if ($anio!="0" && $mes!="0" && $dia!="0" && $horas!="0" && $min!="0") {
+          $fecha->setDate((integer) $anio, $mes, $dia);
+          $fecha->setTime((integer) $horas, (integer) $min, (integer) $seg);
+          print $fecha."<br>";
         } else {
-          print "No hay modificación alguna";
+          print "Faltan parámetros<br>";
         }
       } catch (Exception $e) {
         DateTime::getLastErrors();
