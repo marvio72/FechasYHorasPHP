@@ -1,19 +1,21 @@
-<?php 
+<?php
 
+/**
+ * 
+ */
 class FechaFormato extends DateTime
 {
   protected $meses = [1 => 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   protected $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   function __toString()
   {
-    $m = (integer) $this->format("m");
-    $j = (integer) $this->format("j");
-    $a = (integer) $this->format("Y");
-    $w = (integer) $this->format("w");
-    // $h = (integer) $this->format("h");
-    // $i = (integer) $this->format("i");
-    // $s = (integer) $this->format("s");
-    // $e = $this->format("e");
-    return $this->dias[$w] . " " . $j . " de " . $this->meses[$m] . " de " . $a;
+    $m = (int) $this->format("m");
+    $j = (int) $this->format("j");
+    $a = (int) $this->format("Y");
+    $w = (int) $this->format("w");
+    $h = (int) $this->format("H");
+    $i = (int) $this->format("i");
+    $e = $this->format("e");
+    return $this->dias[$w] . " " . $j . " de " . $this->meses[$m] . " de " . $a . ", " . $h . " horas, " . $i . " minutos, zona horaria: " . $e;
   }
 }
